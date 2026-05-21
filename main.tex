@@ -3,6 +3,7 @@
 %------------PREAMBLE
 \input{preamble}
 \setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
 %---------------------------
                                           
 \begin{document}
@@ -12,7 +13,11 @@
 %---------------------------
 
 %---------------------------TABLE OF CONTENTS
+\pagenumbering{roman}
 \tableofcontents
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
 %---------------------------
 
 %---------------------------MAIN BODY
@@ -20,12 +25,6 @@
 \input{chapter2}
 \input{chapter3}
 \input{chapter4}
-%---------------------------
-
-%---------------------------APPENDICES
-\begin{appendices}
- \input{appendix1}
-\end{appendices}
 %---------------------------
 
 %---------------------------BIBLIOGRAPHY

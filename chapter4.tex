@@ -1,3 +1,64 @@
 \chapter{Extension}
 
-If time allows, is to extend the model by changing how sand is added.
+To further study the effect of the driving mechanism on the BTW sandpile model, we consider a simple extension of the original model. In the original BTW model, only one sand grain is added to the lattice at each time step. In this extension, we add three sand grains to the same random lattice site at each time step, and the avalanche relaxation is performed after all grains have been added. 
+
+Before analyzing the simulation results, we first make some predictions for this extension. For the average height, since three sand grains are added at each time step, we expect sand accumulation to be faster at the early stage. Therefore, $\langle p_t \rangle$ is expected to increase faster than in the original model. However, the average height should not increase without limit. After a sufficiently long time, we still expect the system to enter a steady state. 
+
+From the simulation (as shown in Figure \ref{fig:ave_height_overtime_ext}), the extension model is generally consistent with the previous prediction. At the early stage, sand accumulation in the extension model is clearly faster. Second, the average height of both models does not increase without limit. The final average height of the original model is approximately \(2.1009\), while the final average height of the extension model is approximately \(2.1003\). Overall, the extension model mainly changes the speed of reaching the steady state.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/Ave_height_overtime_ext.png}
+    \caption{Extension: Average height over time}
+    \label{fig:ave_height_overtime_ext}
+\end{figure}
+
+For avalanche statistics, the distributions of topples $s$, area $a$, loss $l$, and length $r$ are expected to shift toward larger values. This is because adding three grains to the same site creates a stronger local perturbation, which may trigger larger avalanches. 
+
+From the simulation (as shown in Figure \ref{fig:topples_area_fit_ext} and Figure \ref{fig:loss_length_fit_ext}), the results are generally consistent with the previous prediction. First, topples and area still show approximate power-law behaviour in the extension model. The topples exponent in the extension model is approximately $0.984$, which is smaller than $1.070$ in the original model. The area exponent is approximately $0.976$, which is also smaller than $1.059$ in the original model. A smaller exponent means that the distribution decays more slowly, so large avalanches are more likely to occur in the extension model. Second, loss and length can still be fitted by Gamma distributions. In the extension model, the scale parameter of loss is $5.682$, which is larger than $4.904$ in the original model. The scale parameter of length is $16.452$, which is also larger than $15.090$ in the original model. This suggests that avalanches in the extension model are more likely to produce larger boundary loss and spread over a larger spatial range. 
+
+\begin{figure}[htbp]
+    \centering
+
+    \begin{subfigure}{0.40\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/topples_fit_ext.png}
+        \caption{Extension: Topples distribution}
+        \label{fig:topples_fit_ext}
+    \end{subfigure}
+    \hspace{0.06\textwidth}
+    \begin{subfigure}{0.40\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/area_fit_ext.png}
+        \caption{Extension: Area distribution}
+        \label{fig:area_fit_ext}
+    \end{subfigure}
+
+    \caption{Extension: Distribution fit for topples and area}
+    \label{fig:topples_area_fit_ext}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+
+    \begin{subfigure}{0.40\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/loss_fit_ext.png}
+        \caption{Extension: Loss distribution}
+        \label{fig:loss_fit_ext}
+    \end{subfigure}
+    \hspace{0.06\textwidth}
+    \begin{subfigure}{0.40\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/length_fit_ext.png}
+        \caption{Extension: Length distribution}
+        \label{fig:length_fit_ext}
+    \end{subfigure}
+
+    \caption{Extension: Distribution fit for topples and area}
+    \label{fig:loss_length_fit_ext}
+\end{figure}
+
+For correlations, different avalanche observables are still expected to show mainly positive correlations. In particular, topples, area, and radius should keep strong positive correlations, because a larger avalanche usually contains more topplings, affects more lattice sites, and spreads farther across the lattice. 
+
+From simulation, the correlations between topples \& area and area \& length are $0.921$ and $0.890$ respectively, which are similar with the results in the original model. Furthermore, the extension model does not strongly change the correlation structure between avalanche observables, then the results still support the previous prediction. 

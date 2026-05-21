@@ -1,35 +1,25 @@
 \chapter{Model Description}
 
-In this project, we use the BTW Sandpile Model to study self-organized criticality (SOC). The model uses a finite two-dimensional lattice to perform a sandpile system, and each lattice site corresponds to a local sand pile. In this chapter, we will introduce a detailed mathematical definition for the sandpile model, including the local rules. 
+In this project, we use the BTW Sandpile Model to study self-organized criticality (SOC). The model uses a finite two-dimensional lattice to perform a sandpile system, and each lattice site corresponds to a local sand pile. In this chapter, we will introduce a detailed mathematical definition for the sandpile model, including the local rules. We will also discuss the theoretical questions about the Abelian property. 
+
+
 
 \section{The BTW Sandpile Model}
 
 The two-dimensional lattice is defined as:
-
 $$
 L=\{1,\ldots,N\}\times\{1,\ldots,M\}
 $$
-
-where:
-
-\begin{itemize}
-    \item $N$ is the number of rows;
-    \item $M$ is the number of columns;
-    \item $(i,j)\in L$ represents a lattice site.
-\end{itemize}
+where $N$ is the number of rows, $M$ is the number of columns, $(i,j)\in L$ represents a lattice site.
 
 At time step $t$, the number of sand grains at site $(i,j)$ is given by:
-
 $$
 p_t(i,j)\in\mathbb{N}_0. 
 $$
-
 The full sandpile configuration at time $t$ is written as:
-
 $$
 P_t=\{p_t(i,j)\}_{(i,j)\in L}. 
 $$
-
 In this model, $t$ represents the external sand addition step, rather than the number of internal topplings during an avalanche. At each time step, one grain of sand is added to the system, while the internal toppling process is considered as instantaneous \citep{Project2020}. 
 
 
@@ -37,39 +27,28 @@ In this model, $t$ represents the external sand addition step, rather than the n
 \section{Toppling Dynamics and Avalanche Process}
 
 At each time step $t$, we randomly select a lattice site $(i_t,j_t)\in L$, and then add one grain of sand on it:
-
 $$
 p_t(i_t,j_t)\leftarrow p_t(i_t,j_t)+1. 
 $$
-
 The model uses a fixed stability threshold:
-
 $$
 k=4. 
 $$
-
 A site becomes unstable when:
-
 $$
 p_t(i,j)\ge4. 
 $$
-
 When a site becomes unstable, a toppling occurs on it. During one toppling process, the site loses four grains of sand, and one grain is transferred to each of its four nearest neighbours \citep{Project2020}:
-
 $$
 p_t(i,j)\leftarrow p_t(i,j)-4, 
 $$
-
 $$
 p_t(i\pm1,j)\leftarrow p_t(i\pm1,j)+1, 
 $$
-
 $$
 p_t(i,j\pm1)\leftarrow p_t(i,j\pm1)+1. 
 $$
-
 Note that we only consider the nearest neighbours, without considering diagonal neighbours \citep{Project2020}. The nearest neighbour set is defined as:
-
 $$
 \mathcal{N}(i,j)
 =
@@ -80,11 +59,9 @@ $$
 (i,j-1)
 \}
 $$
-
 In this project, we use the open boundary condition. If a toppling happens at the boundary of the lattice, some grains may be removed outside the lattice and system. 
 
 A single grain addition may cause a chain reaction of topplings. When one unstable site topples, its neighbouring sites may also become unstable and then begin toppling. This process is called an avalanche. In this project, an avalanche is defined as the full sequence of topplings caused by one grain addition until the system becomes stable \citep{Project2020}, which is given by: 
-
 $$
 p_t(i,j)<k,
 \quad
@@ -100,23 +77,15 @@ In order to study the avalanche behaviour, this project considers four avalanche
 We denote the avalanche topples as $s$, which is the total number of topplings during one avalanche. Note that if one site topples multiple times during the same avalanche, then every toppling is counted in $s$; We denote the avalanche area as $a$, which is the number of unique lattice sites that topple during one avalanche; We denote the avalanche loss as $l$, which is the total number of sand grains that leave the lattice during one avalanche. 
 
 We denote the avalanche length as $r$, which is defined as the spatial radius:
-
 $$
 r
 =
 \max_{x\in A}
 \|x-x_0\|_2
 $$
+where $x_0$ is the dropping site of the avalanche, $A$ is the set of all toppled lattice sites, $\|\cdot\|_2$ represents the Euclidean distance.
 
-where:
-
-\begin{itemize}
-    \item $x_0$ is the dropping site of the avalanche;
-    \item $A$ is the set of all toppled lattice sites;
-    \item $\|\cdot\|_2$ represents the Euclidean distance.
-\end{itemize}
-
-This length measures the maximum Euclidean distance between the dropping site and all toppled sites, which represents how far the avalanche spreads on grid.
+This length measures the maximum Euclidean distance between the dropping site and all toppled sites, which represents how far the avalanche spreads on grid. And we use the Euclidean distance because it gives a simple geometric measure of spatial spreading and treats diagonal spreading naturally. Therefore, this definition can provide a suitable measure of avalanche length. 
 
 After each avalanche, the simulation records the corresponding values of avalanche properties as $(s,a,l,r)$, which is used for the following statistical analysis. 
 
@@ -158,60 +127,216 @@ $$
 \end{bmatrix}
 $$
 
-Here we assume the dropping site is $(2, 2)$. The avalanche process of this example is derived by implementing the definition and rules as shown above. Then we calculate the avalanche properties by following the definition. 
+Here we assume the dropping site is $(2, 2)$. The avalanche process of this example is performed by implementing the definition and rules as shown above. Then we calculate the avalanche properties by following the definition. 
 
-First, the avalanche topples $s$ denote the total number of toppling events during the avalanche. In this example, four topplings happen at the following lattice sites:
-
-$$
-(2,2), \quad (1,2), \quad (1,3), \quad (2,3), 
-$$
-
-then, 
-
+First, the avalanche topples $s$ denote the total number of toppling events during the avalanche. In this example, four topplings happen at the lattice sites: $(2,2),\, (1,2),\, (1,3),\, (2,3)$, then 
 $$
 s=4. 
 $$
-
 Next, the avalanche area $a$ denotes the number of unique lattice sites that topple during the avalanche. Since all four toppled sites are different:
-
 $$
 a=4. 
 $$
-
-The avalanche loss $l$ denotes the number of sand grains that leave the system through the lattice boundary. In this example:
-
-\begin{itemize}
-    \item the central site $(2,2)$ is an interior site and produces no loss;
-    \item the upper boundary site $(1,2)$ has one missing neighbour and produces one grain loss;
-    \item the upper-right corner site $(1,3)$ has two missing neighbours and produces two grain losses;
-    \item the right boundary site $(2,3)$ has one missing neighbour and produces one grain loss.
-\end{itemize}
-
-Then, the total loss is:
-
+The avalanche loss $l$ denotes the number of sand grains that leave the system through the lattice boundary. In this example, $(2,2)$ is an interior site and produces no loss, $(1,2)$ and $(2,3)$ produce one grain loss respectively, $(1,3)$ produce two grain losses. Then, the total loss is:
 $$
-l=0+1+2+1=4
+l=4
 $$
-
-Finally, the avalanche radius $r$ is defined as the maximum Euclidean distance between the dropping site and all toppled sites:
-
-$$
-r
-=
-\max_{x\in A}
-\|x-x_0\|_2
-$$
-
-where the dropping site is $x_0=(2,2)$, and the set of toppled sites is $A=\{(2,2),(1,2),(1,3),(2,3)\}$. 
-
-Then the corresponding Euclidean distances are $0, 1, 1, \sqrt2$, and: 
-
+Finally, the avalanche radius $r$ is defined as the maximum Euclidean distance between the dropping site and all toppled sites. Since the dropping site is $x_0=(2,2)$ and toppled sites are $(2,2),\, (1,2),\, (1,3),\, (2,3)$, the corresponding Euclidean distances are $0, 1, 1, \sqrt2$. Then 
 $$
 r=\sqrt2
 $$
-
 Hence, the avalanche observables for this example are:
-
 $$
 s=4,\quad a=4,\quad l=4,\quad r=\sqrt2. 
 $$
+
+
+
+\section{Abelian Property}
+
+This section further discusses the theoretical questions related to the Abelian property. In particular, we introduce the toppling matrix, the toppling operator, and the stabilization operator, and explain how to use them to describe the Abelian property in the BTW model. 
+
+To describe the avalanche relaxation process, we introduce the following mathematical definitions. For each site $x \in L$, the sand height is represented by the function
+$$
+p : L \rightarrow \mathbb{N}^{0}.
+$$
+A configuration is called stable if $p(x) < k$ for all $x \in L$, where $k$ is the stability threshold. If there exists at least one site satisfying $p(x) \ge k$, then the configuration is unstable. The toppling matrix $\Delta(x,y)$ denotes the redistribution of sand from site $x$ to site $y$ during a toppling event. The toppling matrix must satisfy the following conditions:
+
+\begin{align}
+\forall x,y \in L \text{ where } x \neq y, \quad
+&\Delta(x,y) = \Delta(y,x) \ge 0, \tag{a} \\
+\forall x \in L, \quad
+&\Delta(x,x) < 0, \tag{b} \\
+\forall x \in L, \quad
+&\sum_{y \in L} \Delta(x,y) \le 0, \tag{c} \\
+&\sum_{x,y \in L} \Delta(x,y) < 0. \tag{d}
+\end{align}
+
+Condition (a) means that the sand transfer between different sites is symmetric and non-negative. This guarantees consistent interactions between neighbouring sites; Condition (b) means that the toppled site loses sand during relaxation. Without this condition, the configuration could not stabilize; Condition (c) states that one toppling event does not increase the total amount of sand in the system. Sand is either conserved or lost through the boundary; Condition (d) guarantees that the system has net dissipation. For a finite lattice with open boundaries, sand can leave the system during boundary topplings, which prevents unlimited accumulation of sand. (\textbf{Ans. to Q9})
+
+In the BTW model, the toppling matrix is defined as: 
+$$
+\Delta(x,y)=
+\begin{cases}
+-2d, & x=y,\\
+1, & x,y \text{ are nearest neighbours},\\
+0, & \text{otherwise}.
+\end{cases}
+$$
+Here, $d$ is the dimension of the lattice. In a $d$-dimensional square lattice, an interior site has $2d$ nearest neighbours. Then, when site $x$ topples, it loses $2d$ grains of sand, each nearest neighbour receives one grain, and all other sites are not affected. According to the definition form, the stability threshold is $k = 2d$. 
+
+We now verify that this definition satisfies the four conditions. For condition (a), if $x$ and $y$ are nearest neighbours, then
+$$
+\Delta(x,y)=\Delta(y,x)=1.
+$$
+If they are not neighbours, then
+$$
+\Delta(x,y)=\Delta(y,x)=0.
+$$
+Therefore, for $x\neq y$,
+$$
+\Delta(x,y)=\Delta(y,x)\ge 0.
+$$
+For condition (b), by definition,
+$$
+\Delta(x,x)=-2d<0.
+$$
+For condition (c), if $x$ is an interior site, it has $2d$ neighbours, so
+$$
+\sum_{y\in L}\Delta(x,y)=-2d+2d\cdot 1=0.
+$$
+If $x$ is a boundary site, it has fewer than $2d$ neighbours inside the lattice. Let $\alpha_x$ be the number of its valid neighbours in $L$, and $\alpha_x\le 2d$. Then 
+$$
+\sum_{y\in L}\Delta(x,y)=-2d+\alpha_x\le 0.
+$$
+For condition (d), since the lattice is finite and has open boundaries, there is at least one boundary site. For a boundary site $x$, we have $\alpha_x<2d$, so
+$$
+\sum_{y\in L}\Delta(x,y)=-2d+\alpha_x<0.
+$$
+Therefore, when summing over all sites, there is at least one negative contribution. Hence,
+$$
+\sum_{x,y\in L}\Delta(x,y)<0.
+$$
+Thus, the BTW toppling matrix satisfies all four conditions. (\textbf{Ans. to Q10})
+
+Given the definition of the toppling matrix, the toppling operator $T_x$ maps a configuration $p$ to a new configuration $p'$ is: 
+$$
+(T_xp)(y):=
+\begin{cases}
+p(y)+\Delta(x,y), & p(x)\ge k,\\
+p(y), & \text{otherwise}.
+\end{cases}
+$$
+Assume that both $x$ and $x'$ are unstable in the configuration $p$, i.e., 
+$$
+p(x)\ge k,
+\qquad
+p(x')\ge k.
+$$
+Since $\Delta(x,x')\ge0$ for $x\neq x'$, toppling site $x$ cannot decrease the height at site $x'$. Therefore, $x'$ remains unstable after toppling $x$. Similarly, $x$ remains unstable after toppling $x'$. Hence, both toppling orders are valid.
+
+For any site $y\in L$, 
+$$
+(T_{x'}T_xp)(y)
+=
+p(y)+\Delta(x,y)+\Delta(x',y),
+$$
+and, 
+$$
+(T_xT_{x'}p)(y)
+=
+p(y)+\Delta(x',y)+\Delta(x,y).
+$$
+Since addition is commutative, 
+$$
+\Delta(x,y)+\Delta(x',y)
+=
+\Delta(x',y)+\Delta(x,y).
+$$
+Then, 
+$$
+(T_{x'}T_xp)(y)
+=
+(T_xT_{x'}p)(y), \quad \forall y\in L
+$$
+Hence, 
+$$
+T_{x'}T_xp
+=
+T_xT_{x'}p.
+$$
+Thus, the toppling operators commute for unstable configurations. (\textbf{Ans. to Q11})
+
+In general, an unstable configuration may require more than one toppling before it becomes stable. Therefore, we define a stabilization operator to denote the whole relaxation process. This operator maps any height configuration to a stable height configuration,
+$$
+\mathbb{T}: U_L \rightarrow S_L,
+$$
+where $U_L$ is the space of all possible height configurations, and $S_L \subset U_L$ is the subset of stable height configurations.
+
+If an avalanche contains $N$ topplings, then the stabilization operator can be written as, 
+$$
+\mathbb{T}=\prod_{i=1}^{N}T_{x_i},
+$$
+where $N$ is the number of instabilities in an avalanche.
+
+We now show that the stabilization operator $\mathbb{T}$ is well defined. This means that, for a given unstable configuration $p$, the final stable configuration does not depend on the order of legal topplings.
+
+Assume that two toppling sequences both stabilize $p$. Let $n_x$ and $m_x$ be the number of times site $x$ is toppled in the first and second sequence, respectively. Then the two final configurations are
+$$
+p'(y)=p(y)+\sum_{x\in L} n_x\Delta(x,y), \quad p''(y)=p(y)+\sum_{x\in L} m_x\Delta(x,y).
+$$
+It is enough to show that
+$$
+n_x=m_x, \quad \forall x\in L.
+$$
+For contradiction, suppose that the second sequence topples some sites more times than the first sequence. Let $v$ be the first site among them. Before this extra toppling at $v$, we have
+$$
+m_v=n_v,
+\quad
+m_x\le n_x, \quad \forall x\neq v.
+$$
+Let $\xi$ be the current configuration at this moment. Since the toppling at $v$ is legal,
+$$
+\xi(v)\ge k.
+$$
+Now compare $\xi(v)$ with the stable configuration $p'(v)$:
+$$
+\xi(v)-p'(v)
+=
+\sum_{x\in L}(m_x-n_x)\Delta(x,v).
+$$
+Since $m_v=n_v$, the term with $x=v$ is zero. For $x\neq v$, we have $m_x-n_x\le0$ and $\Delta(x,v)\ge0$. Then,
+$$
+\xi(v)-p'(v)\le0,
+$$
+so
+$$
+\xi(v)\le p'(v).
+$$
+However, $p'$ is stable, then
+$$
+p'(v)<k.
+$$
+Therefore,
+$$
+\xi(v)<k,
+$$
+which contradicts the fact that the toppling at $v$ is legal. Then,
+$$
+m_x\le n_x, \quad \forall x\in L.
+$$
+By exchanging the two sequences, we also obtain
+$$
+n_x\le m_x, \quad \forall x\in L.
+$$
+Then,
+$$
+n_x=m_x, \quad \forall x\in L.
+$$
+Therefore,
+$$
+p'(y)=p''(y), \quad \forall y\in L.
+$$
+So the final stable configuration is unique. Hence, the stabilization operator $\mathbb{T}$ is well defined. (\textbf{Ans. to Q12})
+
+In summary, the Abelian property shows that the avalanche relaxation process in the BTW model is mathematically consistent. Therefore, in the simulation, it is not necessary to choose a specific order for processing unstable sites. As long as all legal topplings are completed, the final result is the same. This property can simplify the algorithm and also support the following analysis for the avalanche properties. 

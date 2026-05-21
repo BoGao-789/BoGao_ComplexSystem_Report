@@ -31,7 +31,7 @@ P_Y(y)\propto y^{-(1+\alpha)},
 $$
 which is a power-law distribution.
 
-This shows that scale-related transformations can naturally produce power-law behaviour. Therefore, power-law distributions are a natural description for systems with scale-invariant behaviour (\textbf{Ans. to Q1}). 
+This shows that scale-related transformations can naturally produce power-law behaviour. Therefore, power-law distributions are a natural description for systems with scale-invariant behaviour. (\textbf{Ans. to Q1})
 
 
 
@@ -73,6 +73,10 @@ $$
 If a toppling occurs at the grid boundary, some grains may be sent outside the lattice, and these grains will be removed from the system and counted as boundary loss. The boundary loss is important, because it prevents the total amount of sand on the grid from increasing without limit. With continuous sand addition and boundary loss, the system can eventually reach a statistically stable state \citep{Bak1987} \citep{Watkins2016}. 
 
 The toppling of one site may cause an unstable condition for its neighbours, and these kind of sites may topple and create further unstable sites. Then a chain reaction of topplings happens, and this event caused by adding one grain of sand is called an avalanche \citep{Watkins2016}. The behaviour of avalanches is the main object studied in this project, because is shows how a small local input can create events with different sizes. 
+
+According to above introduction for the BYW model, we can observe several important properties required for a system to exhibit SOC: First, the BTW model is a slowly driven system, we only add one grain of sand to the lattice at each time step; Second, the model contains a local threshold mechanism, since the site topples when the height of a site reaches 4 or more; Third, the BTW model can naturally produces avalanche behaviour, since one toppling event may cause neighbouring sites to become unstable and then create a chain reaction of more topplings. Fourth, the model includes boundary dissipation, since some grains leave the system when toppling occurs at the edge of the lattice; Fifth, the BTW model can evolve toward a critical state without carefully tuning parameters \citep{Bak1987}; Finally, the BTW model exhibits scale invariance and power-law behaviour \citep{Bak1987}. (\textbf{Ans. to Q2})
+
+In the BTW model, finite boundaries are important because they allow sand grains to leave the system when toppling occurs. This boundary dissipation can prevent the total amount of sand from increasing without limit. As a result, the system can reach a statistically stable critical state under continuous sand addition. However, if we consider infinite lattice and drop sand on only a finite region, grains could spread arbitrarily far away. (\textbf{Ans. to Q3})
 
 In the simulation in this study, four avalanche properties are recorded: topples, area, loss, and length. The value of topples is the total number of toppling events in one avalanche; The value of area is the number of unique sites that topple at least once. The value of loss is the number of grains that leave the lattice through the boundary. The value of length measures the spatial extent of the avalanche, in this study, length is defined as the avalanche radius. 
 
