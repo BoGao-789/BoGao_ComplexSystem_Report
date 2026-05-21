@@ -25,8 +25,6 @@ The report includes:
 - Model implementation
 - Model extension
 
----
-
 ### LaTeX Files
 
 The repository also includes the LaTeX files used to generate `FinalReport.pdf`, such as:
